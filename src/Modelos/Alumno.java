@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Alumnos {
+public class Alumno {
     private int id;
     private int matricula;
     private String nombre;
@@ -15,7 +15,7 @@ public class Alumnos {
     private String sexo;
     private String correo;
 
-    private Alumnos(int id, int matricula, String nombre, int edad, String sexo, String correo) {
+    private Alumno(int id, int matricula, String nombre, int edad, String sexo, String correo) {
         this.id = id;
         this.matricula = matricula;
         this.nombre = nombre;
@@ -24,13 +24,22 @@ public class Alumnos {
         this.correo = correo;
     }
 
-    private Alumnos(int matricula, String nombre, int edad, String sexo, String correo) throws Exception {
+    private Alumno(int matricula, String nombre, int edad, String sexo, String correo){
         this.matricula = matricula;
         this.nombre = nombre;
         this.edad = edad;
         this.sexo = sexo;
         this.correo = correo;
     }
+
+    private Alumno(int matricula) {
+        this.matricula = matricula;
+    }
+
+    public static Alumno crearAlumno(int matricula, String nombre, int edad, String sexo, String correo){
+        return new Alumno(matricula, nombre, edad, sexo, correo);
+    }
+
 
     public void save() throws Exception {
         try (
@@ -74,19 +83,45 @@ public class Alumnos {
         }
     }
 
-    public static List<Alumnos> getAll() throws Exception{
+    public static List<Alumno> getAll() throws Exception{
         try (
                 Connection con = Conexion.getConexion();
                 PreparedStatement ps = con.prepareStatement("SELECT * FROM ALUMNOS")
         ){
             ResultSet rs = ps.executeQuery();
-            List<Alumnos> listAlum = new ArrayList<>();
+            List<Alumno> listAlum = new ArrayList<>();
             while (rs.next()){
-                Alumnos al = new Alumnos(rs.getInt("id"), rs.getInt("matricula"), rs.getString("nombre"), rs.getInt("edad"), rs.getString("sexo"), rs.getString("correo"));
+                Alumno al = new Alumno(rs.getInt("id"), rs.getInt("matricula"), rs.getString("nombre"), rs.getInt("edad"), rs.getString("sexo"), rs.getString("correo"));
                 listAlum.add(al);
             }
             return listAlum;
         }
     }
 
+    public static Alumno getAlumnobyMatricula(int Matricula) throws Exception{
+        Alumno a = new Alumno(Matricula);
+        try (
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("SELECT * FROM ALUMNOS WHERE matricula = ?")
+                ){
+            ps.setInt(1, Matricula);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                a = new Alumno(rs.getInt("id"), rs.getInt("matricula"), rs.getString("nombre"), rs.getInt("edad"), rs.getString("sexo"), rs.getString("correo"));
+            }
+            return a;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Alumno{" +
+                "id=" + id +
+                ", matricula=" + matricula +
+                ", nombre='" + nombre + '\'' +
+                ", edad=" + edad +
+                ", sexo='" + sexo + '\'' +
+                ", correo='" + correo + '\'' +
+                '}';
+    }
 }
