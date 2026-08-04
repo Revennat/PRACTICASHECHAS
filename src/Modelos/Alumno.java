@@ -69,7 +69,7 @@ public class Alumno {
         }
     }
 
-    public int updateByMatricula() throws Exception{
+    public int updateByMatricula(int oldmatricula) throws Exception{
         try (
                 Connection con = Conexion.getConexion();
                 PreparedStatement ps = con.prepareStatement("UPDATE ALUMNOS SET nombre = ?, edad = ?, sexo = ?, correo = ? WHERE matricula = ?")
@@ -78,7 +78,7 @@ public class Alumno {
             ps.setInt(2, this.edad);
             ps.setString(3, this.sexo);
             ps.setString(4, this.correo);
-            ps.setInt(5, this.matricula);
+            ps.setInt(5, oldmatricula);
             return ps.executeUpdate();
         }
     }
@@ -123,5 +123,30 @@ public class Alumno {
                 ", sexo='" + sexo + '\'' +
                 ", correo='" + correo + '\'' +
                 '}';
+    }
+
+    public static void getHombresMujeres() throws Exception{
+        try (
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) AS TOTAL_HOMBRES FROM ALUMNOS WHERE SEXO= 'M'");
+                PreparedStatement ps1 = con.prepareStatement("SELECT COUNT(*) AS TOTAL_MUJERES FROM ALUMNOS WHERE SEXO= 'F'")
+        )
+        {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                int totalHombres = rs.getInt("TOTAL_HOMBRES");
+                System.out.println("total del hombres:" + totalHombres);
+
+            }
+
+            ResultSet rs1 = ps1.executeQuery();
+            if (rs1.next()){
+                int totalMujeres = rs1.getInt("TOTAL_MUJERES");
+                System.out.println("total del mujeres:" + totalMujeres);
+
+            }
+
+
+        }
     }
 }

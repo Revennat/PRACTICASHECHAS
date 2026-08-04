@@ -1,5 +1,7 @@
 import Modelos.Alumno;
 
+import javax.xml.transform.Source;
+
 
 void main() {
     boolean ciclo = true;
@@ -47,12 +49,45 @@ void main() {
                 }
                 break;
             case 3:
-                System.out.println("Alumnos");
+                System.out.println("Matricula del Alumno:");
+                int oldMatricula = lr.nextInt();
 
+                System.out.println("Creacion del alumno!");
+                System.out.println("Matricula");
+                int newMatricula = lr.nextInt();
+                lr.nextLine();
+                System.out.println("Nombre");
+                String newNombre = lr.nextLine();
+                System.out.println("Edad");
+                int newEdad = lr.nextInt();
+                lr.nextLine();
+                System.out.println("Sexo");
+                String newSexo = lr.nextLine();
+                System.out.println("Correo");
+                String newCorreo = lr.nextLine();
+
+                try {
+                    Alumno.crearAlumno(newMatricula, newNombre, newEdad, newSexo, newCorreo).updateByMatricula(oldMatricula);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 4:
+                System.out.println("Matricula del Alumno:");
+                int delMatricula = lr.nextInt();
+                try {
+                    Alumno.getAlumnobyMatricula(delMatricula).deleteByMatricula();
+                }catch (Exception e){
+                    throw new RuntimeException(e);
+                }
                 break;
             case 5:
+                System.out.println("Cantidad de hombres y mujeres en la base de datos");
+                try {
+                    Alumno.getHombresMujeres();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 6:
                 System.out.println("Saliendo...");
