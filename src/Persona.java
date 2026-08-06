@@ -1,5 +1,7 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +15,16 @@ public class Persona {
     public void save() throws Exception{
         try (
                 Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("INSERT INTO PERSONA(nombre, edad, sexo) VALUES (?,?,?) ")
+                PreparedStatement ps = con.prepareStatement("INSERT INTO PERSONA(nombre, edad, sexo) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS)
                 ){
-
+            ps.setString(1, this.nombre);
+            ps.setInt(2, this.edad);
+            ps.setString(3, this.sexo);
+            ps.executeQuery();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()){
+                this.id = rs.getInt(1, id);
+            }
 
         }
     }
