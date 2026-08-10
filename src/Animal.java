@@ -4,6 +4,19 @@ public class Animal {
     private String tipo;
     private int persona_id;
 
+    public Animal(int id, String nombre, String tipo, int persona_id) {
+        this.id = id;
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.persona_id = persona_id;
+    }
+
+    public Animal(int id, String nombre, String tipo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.tipo = tipo;
+    }
+
     public int getId() {
         return id;
     }

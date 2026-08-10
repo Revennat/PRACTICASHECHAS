@@ -38,6 +38,46 @@ public class Persona {
         return 0;
     }
 
+    public void agregarAnimal(Animal a) throws Exception{
+        if (this.id == 0){
+            throw new Exception("Debe guardar la persona antes de que agrege un animal");
+        }
+
+        String sql = "INSERT INTO Animal (nombre, tipo, persona_id) VALUES (?, ?, ?)";
+
+        try(Connection conexion = Conexion.getConexion();
+            PreparedStatement pstmt = conexion.prepareStatement(sql);)
+        {
+            pstmt.setString(1, a.getNombre());
+            pstmt.setString(2, a.getTipo());
+            pstmt.setInt(3, this.id);
+
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if(rs.next()){
+
+            }
+        }
+    }
+
+    //Buscar los animales que su dueno es la persona
+
+    public  List<Animal> getAnimales() throws Exception{
+        String sql = "SELECT * FROM Animal WHERE persona_id = ?";
+
+        try(Connection conexion = Conexion.getConexion();
+            PreparedStatement pstmt = conexion.prepareStatement(sql);)
+        {
+            pstmt.setInt(1, this.id);
+            ResultSet rs = pstmt.executeQuery();
+            this.animals = new ArrayList<>();
+            while(rs.next()){
+                this.animals.add(new Animal (rs.getInt("id"), rs.getString("nombre"), rs.getString("tipo")));
+            }
+            return this.animals;
+        }
+    }
+
 
     public int getId() {
         return id;
