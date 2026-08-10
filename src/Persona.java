@@ -23,10 +23,19 @@ public class Persona {
             ps.executeQuery();
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()){
-                this.id = rs.getInt(1, id);
+                this.id = rs.getInt(1);
             }
+        }
+    }
+
+    public int update() throws Exception {
+        try (
+                Connection con = Conexion.getConexion();
+                PreparedStatement ps = con.prepareStatement("UPDATE PERSONA ")
+                ) {
 
         }
+        return 0;
     }
 
 
