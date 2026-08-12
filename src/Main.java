@@ -1,3 +1,6 @@
-void main() {
+import Modelos.*;
+
+void main() throws Exception {
+
 
 }
