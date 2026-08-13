@@ -122,12 +122,12 @@ public class Vehiculo {
                 PreparedStatement ps = con.prepareStatement("SELECT * FROM VEHICULOS WHERE id = ?")
         ){
             ps.setInt(1, id);
-            Vehiculo cuentaUsuario = new Vehiculo();
+            Vehiculo vehiculo = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
-                cuentaUsuario = new Vehiculo(id, rs.getString(2), rs.getInt(3), rs.getString(4));
+                vehiculo = new Vehiculo(id, rs.getString(2), rs.getInt(3), rs.getString(4));
             }
-            return cuentaUsuario;
+            return vehiculo;
         }
     }
 
