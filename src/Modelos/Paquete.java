@@ -83,7 +83,7 @@ public class Paquete {
     public int update() throws Exception{
         try (
                 Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("UPDATE PAQUETES SET (nombreDestinatario = ?, kg = ?, EstrategiaEnvio = ?) WHERE id = ?")
+                PreparedStatement ps = con.prepareStatement("UPDATE PAQUETES SET nombreDestinatario = ?, kg = ?, EstrategiaEnvio = ? WHERE id = ?")
         ){
             ps.setString(1, this.nombreDestinario);
             ps.setDouble(2, this.kg);
@@ -120,10 +120,10 @@ public class Paquete {
     public static Paquete findById(int id) throws Exception{
         try (
                 Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("SELECT * FROM PAQUETES WHERE = ?");
+                PreparedStatement ps = con.prepareStatement("SELECT * FROM PAQUETES WHERE id = ?");
         ){
             ps.setInt(1, id);
-            Paquete p = new Paquete();
+            Paquete p = null;
             ResultSet rs = ps.executeQuery();
              if(rs.next()){
                p = new Paquete(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4));
