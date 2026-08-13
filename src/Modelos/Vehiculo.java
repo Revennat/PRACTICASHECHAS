@@ -81,7 +81,7 @@ public class Vehiculo {
     public int update() throws Exception{
         try (
                 Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("UPDATE VEHICULOS SET (placa = ?, horasEstacionadas = ?, Tarifa = ?) WHERE id = ?")
+                PreparedStatement ps = con.prepareStatement("UPDATE VEHICULOS SET placa = ?, horasEstacionadas = ?, Tarifa = ? WHERE id = ?")
         ){
             ps.setString(1, this.placa);
             ps.setInt(2, this.horasEstacionado);
