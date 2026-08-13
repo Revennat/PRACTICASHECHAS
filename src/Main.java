@@ -23,7 +23,7 @@ void main() throws Exception{
                 int horas = lr.nextInt();
                 lr.nextLine();
                 System.out.println("Tarifa del vehiculo");
-                System.out.println("Tarifas disponibles:\n 1. Tarifa\n 2. Tarifa\n 3. Tarifa\n");
+                System.out.println("Tarifas disponibles:\n 1. Tarifa Auto\n 2. Tarifa Camion\n 3. Tarifa Moto\n");
                 String tarifa = lr.nextLine();
 
                 try {
@@ -60,7 +60,7 @@ void main() throws Exception{
                 lr.nextLine();
 
                 System.out.println("Tarifa del vehiculo");
-                System.out.println("Tarifas disponibles:\n 1. Tarifa\n 2. Tarifa\n 3. Tarifa\n");
+                System.out.println("Tarifas disponibles:\n 1. Tarifa Auto\n 2. Tarifa Camion\n 3. Tarifa Moto\n");
                 String tarifact = lr.nextLine();
 
                 try {
@@ -76,6 +76,20 @@ void main() throws Exception{
                     System.out.println("no hay registros en la base de datos");
                     break;
                 }
+
+                System.out.println("Lista de Vehiculos");
+                System.out.println(Vehiculo.GetAll().toString());
+
+                System.out.println("Selecciona el id que quieras borrar");
+                int idel = lr.nextInt();
+
+                try {
+                    Vehiculo.findById(idel).delate();
+                    System.out.println("Vehiculo ELIMINADO");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
                 break;
             case 4:
                 if (Vehiculo.GetAll().isEmpty()){
