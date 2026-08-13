@@ -83,13 +83,12 @@ public class Cuenta_Usuario {
     public int update() throws Exception{
         try (
                 Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("UPDATE CUENTAUSUARIOS SET (CorreoElectronico = ?, MesesActivos = ?, PlanSuscripcion = ?) WHERE id = ?")
+                PreparedStatement ps = con.prepareStatement("UPDATE CUENTAUSUARIOS SET CorreoElectronico = ?, MesesActivos = ?, PlanSuscripcion = ? WHERE id = ?")
                 ){
             ps.setString(1, this.correoElectronico);
             ps.setInt(2, this.MesesActivo);
             ps.setString(3, this.PlanSuscripcion);
             ps.setInt(4, this.id);
-
             return ps.executeUpdate();
         }
     }
@@ -124,7 +123,7 @@ public class Cuenta_Usuario {
                 PreparedStatement ps = con.prepareStatement("SELECT * FROM CUENTAUSUARIOS WHERE id = ?")
                 ){
             ps.setInt(1, id);
-            Cuenta_Usuario cuentaUsuario = new Cuenta_Usuario();
+            Cuenta_Usuario cuentaUsuario = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 cuentaUsuario = new Cuenta_Usuario(id, rs.getString(2), rs.getInt(3), rs.getString(4));
