@@ -81,7 +81,7 @@ public class Vehiculo {
     public int update() throws Exception{
         try (
                 Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("UPDATE VEHICULOs SET (placa = ?, horasEstacionadas = ?, Tarifa = ?) WHERE id = ?")
+                PreparedStatement ps = con.prepareStatement("UPDATE VEHICULOS SET (placa = ?, horasEstacionadas = ?, Tarifa = ?) WHERE id = ?")
         ){
             ps.setString(1, this.placa);
             ps.setInt(2, this.horasEstacionado);
@@ -95,7 +95,7 @@ public class Vehiculo {
     public int delate() throws Exception{
         try (
                 Connection con = Conexion.getConexion();
-                PreparedStatement ps = con.prepareStatement("DELETE VEHICULO WHERE id = ?")
+                PreparedStatement ps = con.prepareStatement("DELETE VEHICULOS WHERE id = ?")
         ){
             ps.setInt(1, this.id);
             return ps.executeUpdate();
